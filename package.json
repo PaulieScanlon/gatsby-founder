@@ -1,0 +1,58 @@
+{
+  "name": "gatsby-founder",
+  "version": "1.0.0",
+  "description": "A gatsby-source-shopify demo",
+  "main": "index.js",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "clean": "gatsby clean",
+    "serve": "gatsby serve",
+    "prettier": "prettier --config ./.prettierrc.js --ignore-path ./.prettierignore --write \"**/*.{json,js,ts,tsx,mdx}\"",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix --quiet"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:fix && npm run prettier",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": ""
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaulieScanlon/gatsby-founder.git"
+  },
+  "keywords": [
+    "Gatsby",
+    "gatsby-source-shopify"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PaulieScanlon/gatsby-founder/issues"
+  },
+  "homepage": "https://github.com/PaulieScanlon/gatsby-founder#readme",
+  "dependencies": {
+    "gatsby": "^3.1.1",
+    "gatsby-plugin-gatsby-cloud": "^2.1.0",
+    "gatsby-plugin-theme-ui": "^0.6.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "theme-ui": "^0.6.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@types/react-helmet": "^6.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
+    "@typescript-eslint/parser": "^4.14.2",
+    "eslint": "^7.19.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-react": "^7.22.0",
+    "husky": "^4.3.8",
+    "prettier": "^2.2.1",
+    "prettier-plugin-organize-imports": "^1.1.1",
+    "typescript": "^4.2.3"
+  }
+}
