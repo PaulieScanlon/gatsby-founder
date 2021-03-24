@@ -4,13 +4,8 @@ import { Container, Heading, Text } from 'theme-ui'
 const NotFoundPage: FunctionComponent = () => {
   return (
     <Container>
-      <Heading as="h1">404</Heading>
-      <Text>
-        Page not found. Kiss me{' '}
-        <span role="img" aria-label="Kiss Mark">
-          💋
-        </span>
-      </Text>
+      <Heading as="h1">Not Found</Heading>
+      <Text>Page not found</Text>
     </Container>
   )
 }

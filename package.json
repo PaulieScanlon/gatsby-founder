@@ -36,7 +36,11 @@
   "dependencies": {
     "gatsby": "^3.1.1",
     "gatsby-plugin-gatsby-cloud": "^2.1.0",
+    "gatsby-plugin-image": "^1.1.1",
+    "gatsby-plugin-sharp": "^3.1.1",
     "gatsby-plugin-theme-ui": "^0.6.0",
+    "gatsby-source-shopify": "^3.10.1",
+    "gatsby-transformer-sharp": "^3.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "theme-ui": "^0.6.0"
@@ -47,6 +51,7 @@
     "@types/react-helmet": "^6.1.0",
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
+    "dotenv": "^8.2.0",
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-react": "^7.22.0",
