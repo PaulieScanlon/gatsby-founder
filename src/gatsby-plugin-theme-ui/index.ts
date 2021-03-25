@@ -2,6 +2,8 @@ const theme = {
   colors: {
     text: '#000',
     background: '#fff',
+    primary: '#ff00ff',
+    grey: '#f7f7f7',
   },
   fonts: {
     heading: 'system-ui',
@@ -14,9 +16,17 @@ const theme = {
     full: '100%',
   },
 
+  zIndices: {
+    header: '999',
+  },
+
   styles: {
+    root: {
+      fontFamily: 'body',
+    },
     header: {
       alignItems: 'center',
+      backgroundColor: 'grey',
       display: 'flex',
       position: 'fixed',
       top: 0,
@@ -25,6 +35,7 @@ const theme = {
       width: 'full',
       mx: 'auto',
       px: [2, 4],
+      zIndex: 'header',
       nav: {
         ul: {
           display: 'flex',
@@ -39,6 +50,17 @@ const theme = {
     },
     main: {
       mt: (theme) => theme.sizes.headerH,
+    },
+  },
+
+  buttons: {
+    default: {
+      cursor: 'pointer',
+    },
+    primary: {
+      variant: 'buttons.default',
+      color: 'text',
+      backgrournd: 'primary',
     },
   },
 }

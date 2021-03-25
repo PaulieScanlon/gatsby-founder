@@ -5,7 +5,11 @@ import { useShopifyArticle } from '../hooks'
 
 interface IShopifyBlogPage {
   /** shopifyBlog page data */
-  data: any
+  data: {
+    shopifyBlog: {
+      title: string
+    }
+  }
 }
 
 const ShopifyBlogPage: FunctionComponent<IShopifyBlogPage> = ({
