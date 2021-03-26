@@ -4,7 +4,15 @@ import { Box, Heading, Text } from 'theme-ui'
 
 interface IShopifyArticleProps {
   /** shopifyArticle page data */
-  data: any
+  data: {
+    shopifyArticle: {
+      title: string
+      content: string
+      blog: {
+        handle: string
+      }
+    }
+  }
 }
 
 const ShopifyArticle: FunctionComponent<IShopifyArticleProps> = ({

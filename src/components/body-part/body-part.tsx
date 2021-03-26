@@ -19,19 +19,20 @@ interface IBodyPartProps {
   partName: IPartName
   /** array of body part images */
   partVariants: IBodyPart[]
+  /** image index to show */
+  randomIndex: number
 }
 
-export const BodyPart: FunctionComponent<IBodyPartProps> = ({ partVariants, partName }) => {
+export const BodyPart: FunctionComponent<IBodyPartProps> = ({ partVariants, partName, randomIndex }) => {
   const [hideIndex, setHideIndex] = useState(0)
   const [randomRotation, setRandomRotation] = useState(180)
   const [randomDuration, setRandomDuration] = useState(0.5)
 
   useEffect(() => {
     const duration = getRandomRange(0.8, 1.2)
-    const index = Math.floor(Math.random() * partVariants.length)
 
     setTimeout(() => {
-      setHideIndex(index)
+      setHideIndex(randomIndex)
     }, (duration * 1000) / 2)
     setRandomRotation(randomRotation + 360)
     setRandomDuration(duration)
