@@ -1,7 +1,7 @@
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, memo, useEffect, useState } from 'react'
 import { Box } from 'theme-ui'
-import { BODY, FEET, HEAD, IBodyPart, IPartName, LEGS } from '../../types'
+import { BODY, FEET, HEAD, IBodyParts, IPartName, LEGS } from '../../types'
 import { getRandomRange } from '../../utils'
 import { Polygon } from '../polygon'
 
@@ -18,12 +18,12 @@ interface IBodyPartProps {
   /** object key name */
   partName: IPartName
   /** array of body part images */
-  partVariants: IBodyPart[]
+  partVariants: IBodyParts[]
   /** image index to show */
   randomIndex: number
 }
 
-export const BodyPart: FunctionComponent<IBodyPartProps> = ({ partVariants, partName, randomIndex }) => {
+export const BodyPart: FunctionComponent<IBodyPartProps> = memo(({ partVariants, partName, randomIndex }) => {
   const [hideIndex, setHideIndex] = useState(0)
   const [randomRotation, setRandomRotation] = useState(180)
   const [randomDuration, setRandomDuration] = useState(0.5)
@@ -36,7 +36,7 @@ export const BodyPart: FunctionComponent<IBodyPartProps> = ({ partVariants, part
     }, (duration * 1000) / 2)
     setRandomRotation(randomRotation + 360)
     setRandomDuration(duration)
-  }, [partVariants])
+  }, [randomIndex])
 
   return (
     <Box
@@ -49,7 +49,7 @@ export const BodyPart: FunctionComponent<IBodyPartProps> = ({ partVariants, part
       }}
     >
       <Polygon partName={partName} />
-      {partVariants.map((item: IBodyPart, index: number) => {
+      {partVariants.map((item: IBodyParts, index: number) => {
         const { title, images } = item
 
         return (
@@ -68,4 +68,6 @@ export const BodyPart: FunctionComponent<IBodyPartProps> = ({ partVariants, part
       })}
     </Box>
   )
-}
+})
+
+BodyPart.displayName = 'BodyPart'

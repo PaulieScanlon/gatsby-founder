@@ -7,21 +7,6 @@ export const FEET: string = 'feet'
 
 export type IPartName = typeof HEAD | typeof BODY | typeof LEGS | typeof FEET
 
-export interface IBodyParts {
-  images: {
-    HEAD: IBodyPart[]
-    BODY: IBodyPart[]
-    LEGS: IBodyPart[]
-    FEET: IBodyPart[]
-  }
-  lengths: {
-    HEAD: number
-    BODY: number
-    LEGS: number
-    FEET: number
-  }
-}
-
 export type IChildImageSharp = {
   localFile: {
     childImageSharp: {
@@ -30,15 +15,13 @@ export type IChildImageSharp = {
   }
 }
 
-export interface IBodyPart {
-  images: IChildImageSharp
+export interface IBodyParts {
   productType: string
   title: string
-  variants: {
-    0: {
-      priceV2: {
-        amount: number
-      }
-    }
-  }
+  images: IChildImageSharp
+  amount: number
+}
+export interface IBodyPart {
+  productType: string
+  parts: IBodyParts[]
 }

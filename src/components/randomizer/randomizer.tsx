@@ -1,13 +1,12 @@
 import { graphql, useStaticQuery } from 'gatsby'
-import React, { Fragment, FunctionComponent, useEffect, useState } from 'react'
-import { Box, Button, Flex, Grid, Select } from 'theme-ui'
-import { IBodyPart, IBodyParts, IPartName } from '../../types'
+import React, { ChangeEvent, FunctionComponent, memo, useEffect, useState } from 'react'
+import { Box, Button, Flex, Grid, Label, Select } from 'theme-ui'
+import { BODY, FEET, HEAD, IBodyPart, IBodyParts, LEGS } from '../../types'
 import { BodyPart } from '../body-part'
 
-export const Randomizer: FunctionComponent = () => {
-  const [trigger, setTrigger] = useState(false)
-  const [randomIndexes, setRandomIndexs] = useState(null)
+const sortOrder = [HEAD, BODY, LEGS, FEET]
 
+export const Randomizer: FunctionComponent = memo(() => {
   const {
     shopifyCollection: { products },
   } = useStaticQuery(graphql`
@@ -34,33 +33,60 @@ export const Randomizer: FunctionComponent = () => {
     }
   `)
 
-  const parts = products.reduce(
-    (parts: IBodyParts, part: IBodyPart) => {
-      const { productType } = part
-      parts.images[productType] = parts.images[productType] || []
-      parts.lengths[productType] = parts.lengths[productType] || {}
-      parts.images[productType].push(part)
-      parts.lengths[productType] = parts.images[productType].length
+  const [parts, setParts] = useState([])
 
-      return parts
-    },
-    { images: {}, lengths: {} },
-  )
-
-  const getRandomIndexes = () =>
-    Object.keys(parts.lengths).reduce((items, item) => {
-      items[item] = items[item] || {}
-      items[item] = Math.floor(Math.random() * parts.lengths[item])
-      return items
-    }, {})
+  const [randomIndexes, setRandomIndexs] = useState({
+    [HEAD]: 0,
+    [BODY]: 0,
+    [LEGS]: 0,
+    [FEET]: 0,
+  })
 
   const handleRandomize = () => {
-    setTrigger(!trigger)
-    setRandomIndexs(getRandomIndexes())
+    setRandomIndexs({
+      ...parts.reduce((acc, curr) => {
+        const { productType, parts } = curr
+        const partsLength = parts.length - 1
+        acc[productType] = acc[productType] || {}
+        acc[productType] = Math.round(Math.random() * partsLength)
+
+        return acc
+      }, {}),
+    })
+  }
+
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const { value, id } = event.currentTarget
+    // console.log(`${id} | ${value} | ${event.target[value].label}`)
+    setRandomIndexs({
+      ...randomIndexes,
+      [id]: Number(value),
+    })
+    // console.log('randomIndex: ', Math.round(Math.random() * event.target.length))
   }
 
   useEffect(() => {
-    setRandomIndexs(getRandomIndexes())
+    // @TODO this is gross! - fix later
+    const parts = products.reduce((parts, part) => {
+      const { title, productType, images }: IBodyParts = part
+
+      parts[productType] = parts[productType] || []
+      parts[productType].push({
+        title,
+        productType,
+        images,
+        amount: part.variants[0].priceV2.amount,
+      })
+      return parts
+    }, {})
+
+    setParts(
+      Object.keys(parts)
+        .map((key) => {
+          return { productType: key, parts: parts[key] }
+        })
+        .sort((a, b) => sortOrder.indexOf(a.productType) - sortOrder.indexOf(b.productType)),
+    )
   }, [])
 
   return (
@@ -69,70 +95,61 @@ export const Randomizer: FunctionComponent = () => {
         gridTemplateColumns: '1fr 2fr',
       }}
     >
-      {randomIndexes ? (
-        <Fragment>
-          <Grid
-            sx={{
-              gap: 0,
-            }}
-          >
-            {Object.keys(parts.images)
-              .map((partName: IPartName, index: number) => {
-                return (
-                  <BodyPart
-                    key={index}
-                    partName={partName}
-                    partVariants={parts.images[partName]}
-                    randomIndex={randomIndexes[partName]}
-                  />
-                )
-              })
-              .reverse()}
-          </Grid>
-          <Box>
-            <Grid>
-              {Object.keys(parts.images)
-                .map((partName: IPartName, index: number) => {
-                  return (
-                    <Select key={index}>
-                      {parts.images[partName]
-                        .map((option: IBodyPart, index: number) => {
-                          const {
-                            title,
-                            variants: {
-                              0: {
-                                priceV2: { amount },
-                              },
-                            },
-                          } = option
+      <Grid
+        sx={{
+          gap: 0,
+        }}
+      >
+        {parts.map((part: IBodyPart, index: number) => {
+          const { productType, parts } = part
+          return (
+            <BodyPart
+              key={index}
+              partName={productType}
+              partVariants={parts}
+              randomIndex={randomIndexes[productType]}
+            />
+          )
+        })}
+      </Grid>
+      <Box>
+        <Grid>
+          {parts.map((part: IBodyPart, index: number) => {
+            // console.log(part)
+            const { productType, parts } = part
 
-                          return (
-                            <option
-                              key={index}
-                              value={title}
-                              selected={index === randomIndexes[partName] ? true : false}
-                            >
-                              {`${title} | ${amount}`}
-                            </option>
-                          )
-                        })
-                        .reverse()}
-                    </Select>
-                  )
-                })
-                .reverse()}
-            </Grid>
-            <Flex
-              sx={{
-                py: 3,
-                justifyContent: 'flex-end',
-              }}
-            >
-              <Button onClick={() => handleRandomize()}>Randomize</Button>
-            </Flex>
-          </Box>
-        </Fragment>
-      ) : null}
+            return (
+              <Grid
+                key={index}
+                sx={{
+                  gap: 1,
+                }}
+              >
+                <Label htmlFor={productType}>{productType}</Label>
+                <Select id={productType} onChange={handleChange} value={randomIndexes[productType]}>
+                  {parts.map((part: IBodyParts, index: number) => {
+                    // console.log(part)
+                    const { title, amount } = part
+                    return (
+                      <option key={index} value={index}>
+                        {`${title} | ${amount}`}
+                      </option>
+                    )
+                  })}
+                </Select>
+              </Grid>
+            )
+          })}
+        </Grid>
+        <Flex
+          sx={{
+            py: 3,
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Button onClick={() => handleRandomize()}>Randomize</Button>
+        </Flex>
+      </Box>
     </Grid>
   )
-}
+})
