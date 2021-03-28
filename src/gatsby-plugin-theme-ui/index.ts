@@ -63,6 +63,12 @@ const theme = {
       backgrournd: 'primary',
     },
   },
+
+  layout: {
+    container: {
+      px: [2, 4],
+    },
+  },
 }
 
 export default theme
