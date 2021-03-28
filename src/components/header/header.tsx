@@ -29,7 +29,7 @@ export const Header: FunctionComponent = () => {
         }}
       >
         <Box>
-          <GatsbyLink to="/">Logo</GatsbyLink>
+          <GatsbyLink to="/">Founder Logo</GatsbyLink>
         </Box>
         <Flex as="nav">
           <Box as="ul">

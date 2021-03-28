@@ -1,10 +1,18 @@
 import { graphql, Link as GatsbyLink } from 'gatsby'
 import React, { FunctionComponent } from 'react'
-import { Box, Heading, Text } from 'theme-ui'
+import { Container, Heading, Text } from 'theme-ui'
 
 interface IShopifyArticleProps {
   /** shopifyArticle page data */
-  data: any
+  data: {
+    shopifyArticle: {
+      title: string
+      content: string
+      blog: {
+        handle: string
+      }
+    }
+  }
 }
 
 const ShopifyArticle: FunctionComponent<IShopifyArticleProps> = ({
@@ -13,11 +21,11 @@ const ShopifyArticle: FunctionComponent<IShopifyArticleProps> = ({
   },
 }) => {
   return (
-    <Box as="main">
+    <Container>
       <GatsbyLink to={`/${blog.handle}`}>Back</GatsbyLink>
       <Heading as="h1">{title}</Heading>
       <Text>{content}</Text>
-    </Box>
+    </Container>
   )
 }
 

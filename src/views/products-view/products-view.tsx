@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react'
 import { Box, Card, Grid, Heading, Text } from 'theme-ui'
 import { useShopifyProducts, useShopifyShop } from '../../hooks'
 
-export const Products: FunctionComponent = () => {
+export const ProductsView: FunctionComponent = () => {
   const { moneyFormat } = useShopifyShop()
   const allShopifyProducts = useShopifyProducts()
 

@@ -1,7 +1,7 @@
 import { graphql } from 'gatsby'
-import React, { Fragment, FunctionComponent } from 'react'
-import { Heading, Text } from 'theme-ui'
-import { Products } from '../views/products'
+import React, { FunctionComponent } from 'react'
+import { Container, Heading, Text } from 'theme-ui'
+import { ProductsView } from '../views/products-view'
 
 interface IShopifyPageProps {
   /** shopifyPage page data */
@@ -20,15 +20,15 @@ const ShopifyPage: FunctionComponent<IShopifyPageProps> = ({
   },
 }) => {
   const views = {
-    products: <Products />,
+    products: <ProductsView />,
   }
 
   return (
-    <Fragment>
+    <Container>
       <Heading as="h1">{title}</Heading>
       <Text as="p">{body}</Text>
       {views[handle] ? views[handle] : null}
-    </Fragment>
+    </Container>
   )
 }
 

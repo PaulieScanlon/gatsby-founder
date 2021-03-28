@@ -1,11 +1,15 @@
 import { graphql, Link as GatsbyLink } from 'gatsby'
-import React, { Fragment, FunctionComponent } from 'react'
-import { Box, Heading } from 'theme-ui'
+import React, { FunctionComponent } from 'react'
+import { Box, Container, Heading } from 'theme-ui'
 import { useShopifyArticle } from '../hooks'
 
 interface IShopifyBlogPage {
   /** shopifyBlog page data */
-  data: any
+  data: {
+    shopifyBlog: {
+      title: string
+    }
+  }
 }
 
 const ShopifyBlogPage: FunctionComponent<IShopifyBlogPage> = ({
@@ -16,7 +20,7 @@ const ShopifyBlogPage: FunctionComponent<IShopifyBlogPage> = ({
   const allShopifyArticles = useShopifyArticle()
 
   return (
-    <Fragment>
+    <Container>
       <Heading as="h1">{title}</Heading>
       <Box as="ul">
         {allShopifyArticles.map((article, index: number) => {
@@ -31,7 +35,7 @@ const ShopifyBlogPage: FunctionComponent<IShopifyBlogPage> = ({
           )
         })}
       </Box>
-    </Fragment>
+    </Container>
   )
 }
 

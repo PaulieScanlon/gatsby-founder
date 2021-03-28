@@ -23,11 +23,12 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 0,
     '@typescript-eslint/no-empty-interface': 1,
     '@typescript-eslint/explicit-function-return-type': 0,
-    '@typescript-eslint/no-floating-promises': 'off',
-    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/no-floating-promises': 0,
+    '@typescript-eslint/interface-name-prefix': 0,
     '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/camelcase': 'off',
-    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/camelcase': 0,
+    '@typescript-eslint/no-empty-interface': 0,
+    '@typescript-eslint/no-inferrable-types': 0,
     '@typescript-eslint/naming-convention': [
       'error',
       {
